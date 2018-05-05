@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-// Load Model
+// Load Post Model
 const { Post } = require('../models/Post');
 
 // Post Index Page
