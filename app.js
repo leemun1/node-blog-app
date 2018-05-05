@@ -109,13 +109,14 @@ app.put('/posts/:id', (req, res) => {
   });
 });
 
+// Delete Post Route
 app.delete('/posts/:id', (req, res) => {
   Post.remove({
     _id: req.params.id
   })
   .then(() => {
     res.redirect('/posts');
-  })
+  });
 });
 
 app.listen(port, () => {
