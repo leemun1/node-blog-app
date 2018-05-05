@@ -109,6 +109,15 @@ app.put('/posts/:id', (req, res) => {
   });
 });
 
+app.delete('/posts/:id', (req, res) => {
+  Post.remove({
+    _id: req.params.id
+  })
+  .then(() => {
+    res.redirect('/posts');
+  })
+});
+
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
 });
