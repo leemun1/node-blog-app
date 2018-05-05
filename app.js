@@ -99,6 +99,7 @@ app.post('/posts', (req, res) => {
     new Post(body)
       .save()
       .then(post => {
+        req.flash('success_msg', 'New post added.');        
         res.redirect('/posts');
       });
   }
@@ -124,6 +125,7 @@ app.put('/posts/:id', (req, res) => {
     post.text = req.body.text;
     post.save()
       .then(post => {
+        req.flash('success_msg', 'Post successfully updated.');
         res.redirect('/posts');
       });
   });
@@ -135,6 +137,7 @@ app.delete('/posts/:id', (req, res) => {
     _id: req.params.id
   })
   .then(() => {
+    req.flash('success_msg', 'Post successfully removed.');
     res.redirect('/posts');
   });
 });
