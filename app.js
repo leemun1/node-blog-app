@@ -13,8 +13,6 @@ const port = 3000 || process.env.PORT;
 // Load Routes
 const posts = require('./routes/posts');
 const users = require('./routes/users');
-app.use('/posts', posts);
-app.use('/users', users);
 
 // Connect to DB
 mongoose.connect('mongodb://localhost:27017/BlogApp')
@@ -65,7 +63,8 @@ app.get('/about', (req, res) => {
   res.render('about');
 });
 
-
+app.use('/posts', posts);
+app.use('/users', users);
 
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
