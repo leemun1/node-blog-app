@@ -3,6 +3,8 @@ const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
+const flash = require('connect-flash');
+const session = require('express-session');
 
 // Load Models
 const { Post } = require('./models/Post');
@@ -27,6 +29,24 @@ app.use(bodyParser.json());
 
 // Method Override Middleware
 app.use(methodOverride('_method'));
+
+// Express session Middleware
+app.use(session({
+  secret: 'purrr',
+  resave: false,
+  saveUninitialized: true,
+}));
+
+// Flash Middleware
+app.use(flash());
+
+// Global Variables
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();  
+});
 
 // Index Route
 app.get('/', (req, res) => {
