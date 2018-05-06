@@ -7,7 +7,7 @@ const { Post } = require('../models/Post');
 
 // Post Index Page
 router.get('/', ensureAuthenticated, (req, res) => {
-  Post.find()
+  Post.find({user: req.user.id})
     .sort({ date: 'desc' })
     .then((posts) => {
       res.render('posts/index', {
@@ -41,7 +41,8 @@ router.post('/', ensureAuthenticated, (req, res) => {
   } else {
     let body = {
       title: req.body.title,
-      text: req.body.text
+      text: req.body.text,
+      user: req.user.id
     }
     new Post(body)
       .save()
@@ -58,8 +59,13 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
     _id: req.params.id
   })
     .then(post => {
-      res.render('posts/edit', { post });
-    })
+      if (post.user != req.user.id) {
+        req.flash('error_msg', 'Not Authorized.');
+        res.redirect('/posts');
+      } else {
+        res.render('posts/edit', { post });
+      }
+    });
 });
 
 // Process Edit Form
