@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const exphbs = require('express-handlebars');
-const mongoose = require('mongoose');
+const { mongoose } = require('./db/mongoose');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const flash = require('connect-flash');
@@ -9,7 +9,7 @@ const session = require('express-session');
 const passport = require('passport');
 
 const app = express();
-const port = 3000 || process.env.PORT;
+const port = process.env.PORT || 3000;
 
 // Load Routes
 const posts = require('./routes/posts');
@@ -17,11 +17,6 @@ const users = require('./routes/users');
 
 // Passport Config
 require('./config/passport')(passport);
-
-// Connect to DB
-mongoose.connect('mongodb://localhost:27017/BlogApp')
-  .then(() => console.log('---MongoDB Conneted---'))
-  .catch(err => console.log(err));
 
 // Handlebars
 app.engine('handlebars', exphbs({
