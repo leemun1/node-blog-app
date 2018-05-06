@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const { ensureAuthenticated } = require('../helpers/auth');
 
 // Load Post Model
 const { Post } = require('../models/Post');
 
 // Post Index Page
-router.get('/', (req, res) => {
+router.get('/', ensureAuthenticated, (req, res) => {
   Post.find()
     .sort({ date: 'desc' })
     .then((posts) => {
@@ -16,12 +17,12 @@ router.get('/', (req, res) => {
 });
 
 // Add Post Form
-router.get('/add', (req, res) => {
+router.get('/add', ensureAuthenticated, (req, res) => {
   res.render('posts/add');
 });
 
 // Process Add Post Form
-router.post('/', (req, res) => {
+router.post('/', ensureAuthenticated, (req, res) => {
   let errors = [];
 
   if (!req.body.title) {
@@ -52,7 +53,7 @@ router.post('/', (req, res) => {
 });
 
 // Edit Post Form
-router.get('/edit/:id', (req, res) => {
+router.get('/edit/:id', ensureAuthenticated, (req, res) => {
   Post.findOne({
     _id: req.params.id
   })
@@ -62,7 +63,7 @@ router.get('/edit/:id', (req, res) => {
 });
 
 // Process Edit Form
-router.put('/:id', (req, res) => {
+router.put('/:id', ensureAuthenticated, (req, res) => {
   Post.findOne({
     _id: req.params.id
   })
@@ -78,7 +79,7 @@ router.put('/:id', (req, res) => {
 });
 
 // Delete Post Route
-router.delete('/:id', (req, res) => {
+router.delete('/:id', ensureAuthenticated, (req, res) => {
   Post.remove({
     _id: req.params.id
   })
