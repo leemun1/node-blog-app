@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-// const passport = require('passport');
+const passport = require('passport');
 
 // Load User Model
 const { User } = require('../models/User');
@@ -14,6 +14,15 @@ router.get('/login', (req, res) => {
 // User Signup Route
 router.get('/signup', (req, res) => {
   res.render('users/signup');
+});
+
+// Process User Login
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', {  
+    successRedirect: '/posts',
+    failureRedirect: '/users/login',
+    failureFlash: true
+  })(req, res, next);
 });
 
 // Proces User Signup 

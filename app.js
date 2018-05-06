@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const flash = require('connect-flash');
 const session = require('express-session');
+const passport = require('passport');
 
 const app = express();
 const port = 3000 || process.env.PORT;
@@ -13,6 +14,9 @@ const port = 3000 || process.env.PORT;
 // Load Routes
 const posts = require('./routes/posts');
 const users = require('./routes/users');
+
+// Passport Config
+require('./config/passport')(passport);
 
 // Connect to DB
 mongoose.connect('mongodb://localhost:27017/BlogApp')
