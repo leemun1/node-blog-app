@@ -11,9 +11,13 @@
         <a class="nav-item nav-link" href="/about">About</a>
       </div>
       <div class="navbar-nav ml-auto">
-        {{#if user}} 
-        <a class="nav-item nav-link" href="/users/profile">My Profile</a>
-        <a class="nav-item nav-link" href="/users/logout">Logout</a>        
+
+        {{#if user}}
+        <button type="button" class="btn btn-sm btn-outline-warning mr-2">
+          <a href="/posts/add">New Post</a>
+        </button>
+        <a class="nav-item nav-link mr-2" href="/users/dashboard">Dashboard</a>
+        <a class="nav-item nav-link" href="/users/logout">Logout</a>
         {{else}}
         <a class="nav-item nav-link" href="/users/login">Login</a>
         <a class="nav-item nav-link" href="/users/signup">Sign Up</a>
